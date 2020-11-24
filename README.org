@@ -3,7 +3,7 @@ This plugin allows mpv to stream magnet links (and any other torrent identifier 
 
 This script will detect =magnet:= links and torrent files/urls ending in =torrent= passed to mpv by default.
 
-One reason you might want to use this script over calling the included ~btplay --mpv~ is that you can start mpv with a playlist of multiple magnet links or add magnet links to the playlist of an already open mpv window (e.g. using one of the scripts that allow appending a link from the clipboard to the playlist).
+One reason you might want to use this script over calling the included ~btplay -p mpv~ is that you can start mpv with a playlist of multiple magnet links or add magnet links to the playlist of an already open mpv window (e.g. using one of the scripts that allow appending a link from the clipboard to the playlist).
 
 * Requirements
 - [[https://github.com/johang/btfs][btfs]]
