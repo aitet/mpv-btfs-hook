@@ -1,8 +1,14 @@
 -- mpv script to play torrents in mpv (https://github.com/aitet/mpv-btfs-hook)
+-- You can make it so btfs keeps files or limit the rate of download via the btfs_flags (see the btfs man page for more info)
 
 local settings = {
    download_directory = "/tmp/btfs",
+   btfs_flags = "",
 }
+
+
+(require "mp.options").read_options(settings, "btfs-hook")
+
 local open_videos = {}
 
 -- http://lua-users.org/wiki/StringRecipes
@@ -30,7 +36,7 @@ function play_torrent()
                 os.execute("mkdir -p " .. dir )
                 -- Mount the torrent with btfs
         	mp.msg.verbose("Mouting directory:" .. dir)
-                os.execute("btfs " .. url .. " " .. dir)
+                os.execute("btfs " .. settings.btfs_flags .. " " .. url .. " " .. dir)
 
                 -- get the filename in the mounted dir
 		local path = dirLookup(dir)

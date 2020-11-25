@@ -20,6 +20,4 @@ Btfs on the other hand is in both the default debian and default arch repos. Mak
 Btfs makes the lua script a lot simpler in implementation than the Peerflix and Webtorrent of the past.
 
 * Limitations
-- No config file and has to mount to a dir in /tmp called btfs.
-- Does not keep the files.
-- Can't limit the download speed.
+- Only plays the first video file form the directory
