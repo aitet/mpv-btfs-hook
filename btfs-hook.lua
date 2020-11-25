@@ -27,7 +27,7 @@ function play_torrent()
         	mp.msg.verbose("Checks /etc/mtab if any btfs filesystems are mounted")
 		local check_empty = os.execute("grep '^btfs' /etc/mtab 2>&1 >/dev/null")
 		if check_empty == true then
-        		mp.msg.verbose("Found mounted btfs")
+        		mp.msg.verbose("Found mounted btfs. Will try to unmount: " .. settings.download_directory)
         		os.execute("fusermount -u " .. settings.download_directory)
 		end
                 -- Mount the torrent with btfs
@@ -37,16 +37,16 @@ function play_torrent()
                 -- get the filename in the mounted dir
 		local path = dirLookup(settings.download_directory)
 
-		open_videos[url] = {url=url}
+		open_videos[url] = {url=url,path=path}
                 mp.set_property("stream-open-filename", path)
         end
 end
 
 function torrent_cleanup()
-	local url = mp.get_property("stream-open-filename")
+	local url = mp.get_property("path")
         if open_videos[url] then
         	mp.msg.verbose("Unmouting directory:" .. settings.download_directory)
-        	os.execute("fusermount -u " .. settings.download_directory)
+        	os.execute("fusermount -zu " .. settings.download_directory)
       		open_videos[url] = {}
 	end
 end
