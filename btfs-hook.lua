@@ -22,22 +22,20 @@ function play_torrent()
 
         -- find if the url is a torrent or magnet link
         if (url:find("magnet:") == 1  or ends_with(url, "torrent")) then
-                os.execute("mkdir -p " .. settings.download_directory)
+		-- set random seed and get folder name between 1000 to 9999.
+		math.randomseed(os.time())
+		local folder = math.random(1000,9999)
+		local dir = settings.download_directory .. "/" .. folder
 
-        	mp.msg.verbose("Checks /etc/mtab if any btfs filesystems are mounted")
-		local check_empty = os.execute("grep '^btfs' /etc/mtab 2>&1 >/dev/null")
-		if check_empty == true then
-        		mp.msg.verbose("Found mounted btfs. Will try to unmount: " .. settings.download_directory)
-        		os.execute("fusermount -u " .. settings.download_directory)
-		end
+                os.execute("mkdir -p " .. dir )
                 -- Mount the torrent with btfs
-        	mp.msg.verbose("Mouting directory:" .. settings.download_directory)
-                os.execute("btfs " .. url .. " " .. settings.download_directory)
+        	mp.msg.verbose("Mouting directory:" .. dir)
+                os.execute("btfs " .. url .. " " .. dir)
 
                 -- get the filename in the mounted dir
-		local path = dirLookup(settings.download_directory)
+		local path = dirLookup(dir)
 
-		open_videos[url] = {url=url,path=path}
+		open_videos[url] = {url=url,path=path,dir=dir}
                 mp.set_property("stream-open-filename", path)
         end
 end
@@ -45,8 +43,10 @@ end
 function torrent_cleanup()
 	local url = mp.get_property("path")
         if open_videos[url] then
-        	mp.msg.verbose("Unmouting directory:" .. settings.download_directory)
-        	os.execute("fusermount -zu " .. settings.download_directory)
+		local dir = open_videos[url].dir
+        	mp.msg.verbose("Unmouting directory:" .. dir)
+        	os.execute("fusermount -zu " .. dir)
+		os.execute("rmdir '" .. dir .. "'")
       		open_videos[url] = {}
 	end
 end
