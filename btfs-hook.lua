@@ -17,7 +17,7 @@ local function ends_with(str, ending)
 end
 
 local function dirLookup(dir)
-   local p = io.popen('find "'..dir..'" -type f | head -n 1')  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
+   local p = io.popen('until [ -f ' .. dir .. '/* ]; do sleep 0.5 ;done ; find "'..dir..'" -type f | head -n 1')  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
    for file in p:lines() do                         --Loop through all files
        return file
    end
@@ -36,7 +36,7 @@ function play_torrent()
                 os.execute("mkdir -p " .. dir )
                 -- Mount the torrent with btfs
         	mp.msg.verbose("Mouting directory:" .. dir)
-                os.execute("btfs " .. settings.btfs_flags .. " " .. url .. " " .. dir)
+                os.execute("btfs " .. settings.btfs_flags .. " '" .. url .. "' " .. dir)
 
                 -- get the filename in the mounted dir
 		local path = dirLookup(dir)
