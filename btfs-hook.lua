@@ -17,7 +17,7 @@ local function ends_with(str, ending)
 end
 
 local function dirLookup(dir)
-   local p = io.popen('until [ -f ' .. dir .. '/* ]; do sleep 0.5 ;done ; find "'..dir..'" -type f | head -n 1')  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
+   local p = io.popen('until [ ! -z "$(ls '.. dir ..')" ]; do sleep 0.5 ;done ; find "'..dir..'" -type f | head -n 1')  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
    for file in p:lines() do                         --Loop through all files
        return file
    end
@@ -30,7 +30,7 @@ function play_torrent()
         if (url:find("magnet:") == 1  or ends_with(url, "torrent")) then
 		-- set random seed and get folder name between 1000 to 9999.
 		math.randomseed(os.time())
-		local folder = math.random(1000,9999)
+		local folder = math.random(10000,99999)
 		local dir = settings.download_directory .. "/" .. folder
 
                 os.execute("mkdir -p " .. dir )
