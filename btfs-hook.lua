@@ -96,11 +96,11 @@ local do_mount = function (url, mountpoint)
 	url=]]..shellquote(url)..'\n'..[[
 	mkdir -p "$mountpoint" || exit 1
 	{
-	if command -v xterm >/dev/null; then
-		exec xterm -title ]]..shellquote(title)..[[ -e btfs -f ]]..btfs_args..[[ "$url" "$mountpoint"
-	else
-		exec btfs -f ]]..btfs_args..[[ "$url" "$mountpoint" 0<>/dev/null 1>&0 2>&0
-	fi
+	# if command -v xterm >/dev/null; then
+	# 	exec xterm -title ]]..shellquote(title)..[[ -e btfs -f ]]..btfs_args..[[ "$url" "$mountpoint"
+	# else
+		exec btfs -f ]]..btfs_args..[[ "$url" "$mountpoint" >/dev/null 2>&1
+	#fi
 	} &
 	pid=$!
 	while true; do
