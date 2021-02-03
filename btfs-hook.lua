@@ -27,7 +27,7 @@ local btfs_args = {
 	'--max-upload-rate=500',
 }
 
-local mountdir = (os.getenv('HOME')..'/mnt/btfs')
+local mountdir = (os.getenv('XDG_DATA_HOME')..'/btfs')
 
 -- list files from the mountpoint that should added to the playlist
 local list_files = function (mountpoint)
