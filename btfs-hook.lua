@@ -2,6 +2,8 @@
 
 script to make mpv play torrents/magnets directly using btfs
 
+original script: https://gist.github.com/huglovefan/4c68bc40661b6701ca5fc6ce1157f192
+
 requires:
 - linux
 - btfs
