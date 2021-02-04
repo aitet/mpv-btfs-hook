@@ -130,7 +130,7 @@ end
 
 -- gets the info hash or torrent filename for use as the mount directory name
 local parse_url = function (url)
-	return url:match('^magnet:%?xt=urn:btih:([0-9a-f]+)')
+	return url:match('^magnet:%?xt=urn:btih:*.')
 	    or url:gsub('[?#].*', '', 1):match('/([^/]+%.torrent)$')
 end
 
