@@ -18,7 +18,7 @@ usage:
 -- see "btfs --help"
 local btfs_args = {
 	-- temporary directory to store downloaded data
-	'--data-directory=/tmp/btfs',
+	-- '--data-directory=', Using xdg by default
 	-- you may want to make sure this is on a real filesystem and not tmpfs
 	-- otherwise it might fill your ram when watching a big enough file
 
@@ -27,7 +27,16 @@ local btfs_args = {
 	'--max-upload-rate=500',
 }
 
-local mountdir = (os.getenv('XDG_DATA_HOME')..'/btfs')
+local mountdir = '/tmp/mpvbtfs'
+
+-- Use xdg path
+local xdgpath = os.getenv('XDG_DATA_HOME')
+if (string.len(xdgpath) < 1) then
+	datadir = (os.getenv('HOME')..'/.local/share/btfs')
+else
+	datadir = string.format('%s/btfs', xdgpath)
+end
+table.insert(btfs_args, [[--data-directory=]]..datadir)
 
 -- list files from the mountpoint that should added to the playlist
 local list_files = function (mountpoint)
