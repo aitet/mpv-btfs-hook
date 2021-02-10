@@ -10,14 +10,9 @@ One reason you might want to use this script over calling the included ~btplay -
 - fuse ("fuse" in Ubuntu 16.04)
 - libtorrent ("libtorrent-rasterbar8" in Ubuntu 16.04)
 - libcurl ("libcurl3" in Ubuntu 16.04)
-- on linux (or maybe similar posix compiant)
-- the find core util atleast
 
 * Advantages Over Peerflix and Webtorrent
 Peerflix and Webtorrent are both written in javascript and have to be installed using npm or external repos.
 Btfs on the other hand is in both the default debian and default arch repos. Makes setup a lot easier and quicker. Btfs is also a lot simpler and cleaner implementation of a bittorrent filesystem protocol utilizing the FUSE subsystem.
 
 Btfs makes the lua script a lot simpler in implementation than the Peerflix and Webtorrent of the past.
-
-* Limitations
-- Only plays the first video file form the directory
