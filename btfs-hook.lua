@@ -29,15 +29,6 @@ local btfs_args = {
 
 local mountdir = '/tmp/mpvbtfs'
 
--- Use xdg path
-local xdgpath = os.getenv('XDG_DATA_HOME')
-if (string.len(xdgpath) < 1) then
-	datadir = (os.getenv('HOME')..'/.local/share/btfs')
-else
-	datadir = string.format('%s/btfs', xdgpath)
-end
-table.insert(btfs_args, [[--data-directory=]]..datadir)
-
 -- list files from the mountpoint that should added to the playlist
 local list_files = function (mountpoint)
 	local p = assert(io.popen([[
